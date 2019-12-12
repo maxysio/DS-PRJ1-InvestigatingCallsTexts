@@ -1,0 +1,3 @@
+Task 0: Read files Calls and Texts. Print the first line of Texts and the last line of Calls dataset
+- Assignment of variables and printing the output is 4 lines
+- There is no 
