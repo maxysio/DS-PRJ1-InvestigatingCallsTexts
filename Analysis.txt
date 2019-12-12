@@ -1,5 +1,5 @@
 Task 0: Read files Calls and Texts. Print the first line of Texts and the last line of Calls dataset
-------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
 - Import statement is 1 line of code
   = O(1)
 - Reading both the Calls and Texts files 
@@ -11,22 +11,51 @@ Task 0: Read files Calls and Texts. Print the first line of Texts and the last l
 - Assignment of variables and printing the output is 4 lines, there is no change again in the number of inputs
  = O(4)
  
- Worst Case scenario here would be O(1 + 2n + 6 + 4) = O(2n + 11)
-------------------------------------------------------------------------------------------------------------------------------------------
+ Worst Case scenario here would be O(1 + 2n + 6 + 4) = O(2n + 11) = O(2n) approximately
+---------------------------------------------------------------------------------------------------------------------------------------
 
 Task 1: How many different telephone numbers are there in the records?
-------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------
 - Import statement is 1 line of code
+  = O(1)
 - Reading both the Calls and Texts files 
   - Each block of code is 3 lines with one input for Calls and Texts file paths
   - The number of inputs will not change
   - Therefore 6 lines of code
   - Depedning on the number of lines in these files, there could be higher complexity in the amount of time the file reader takes to read the file. The worst case scenario in this case would be O(2n) depending on the number of lines in the two files
-  - 
+  = O(2n+6)
 
 - The function getPhoneNumbers
   - This is being called twice
   - Variable assignment and return statement is 2 lines
   - The for loop containing 3 lines will run n number of times depending on the number of items in the list - 3n
-  - O(2(3n+2)) = O(6n+4)
-------------------------------------------------------------------------------------------------------------------------------------------
+  = O(2(2 + 3m)) = O(6m+4)
+ 
+ - There are 3 lines of code for assignment and print
+ = O(3)
+ 
+ Worst Case scenario here would be O(1+2n+6+6m+4+3) = O(2n+6m+14) = O(2n+6m) approximately
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Task 2: Which telephone number spent the longest time on the phone during the period?
+---------------------------------------------------------------------------------------------------------------------------------------
+- Import statements is 2 lines of code
+  = O(2)
+- Reading both the Calls and Texts files 
+  - Each block of code is 3 lines with one input for Calls and Texts file paths
+  - The number of inputs will not change
+  - Therefore 6 lines of code
+  - Depedning on the number of lines in these files, there could be higher complexity in the amount of time the file reader takes to read the file. The worst case scenario in this case would be O(2n) depending on the number of lines in the two files
+  = O(2n+6)
+  
+ - There are 11 assignment statements
+  = O(10)
+  
+ - There are two melt statements - this would depend on the number of phone numbers
+  = O(m) + O(l)
+ 
+ - There is one groupby statement - this would depend on the number of distinct phone numbers
+  = O(k)
+ 
+ Worst Case scenario here would be O(2+2n+6+10+m+l+k) = O(2n+m+l+k+18) = O(2n+m+l+k) approximately
+ ---------------------------------------------------------------------------------------------------------------------------------------
