@@ -19,5 +19,10 @@ Print messages:
 "First record of texts, <incoming number> texts <answering number> at time <time>"
 "Last record of calls, <incoming number> calls <answering number> at time <time>, lasting <during> seconds"
 """
-print(texts[0])
-print(calls[-1])
+# Print the text details
+texts_texting_number, texts_receiving_number, text_time = texts[0][0], texts[0][1], texts[0][2]
+print("First record of texts, {} texts {} at time {}".format(texts_texting_number, texts_receiving_number, text_time))
+
+# Print the call details
+calls_calling_number, calls_receiving_number, call_time, call_duration = calls[-1][0], calls[-1][1], calls[-1][2], calls[-1][3]
+print("Last record of calls, {} calls {} at time {}, lasting {} seconds".format(calls_calling_number, calls_receiving_number, call_time, call_duration))
