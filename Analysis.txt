@@ -1,3 +1,12 @@
 Task 0: Read files Calls and Texts. Print the first line of Texts and the last line of Calls dataset
-- Assignment of variables and printing the output is 4 lines
-- There is no 
+------------------------------------------------------------------------------------------------------------------------------------------
+- Import statement is 1 line of code
+- Reading both the Calls and Texts files 
+  - Each block of code is 3 lines with one input for Calls and Texts file paths
+  - The number of inputs will not change
+  - Therefore 6 lines of code
+  - Depedning on the number of lines in these files, there could be higher complexity in the amount of time the file reader takes to read the file. The worst case scenario in this case would be O(2n) depending on the number of lines in the two files
+- Assignment of variables and printing the output is 4 lines, there is no change again in the number of inputs
+ 
+ Worst Case scenario here would be O(2n + 1 + 6 + 4) = O(2n + 11)
+------------------------------------------------------------------------------------------------------------------------------------------
