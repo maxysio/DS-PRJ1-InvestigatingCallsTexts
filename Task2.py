@@ -19,30 +19,20 @@ Print a message:
 "<telephone number> spent the longest time, <total time> seconds, on the phone during 
 September 2016.".
 """
-import pandas as pd
-
-#Import the list to a dataframe
-df_calls = pd.DataFrame(calls, columns=['Calling_Number', 'Receiving_Number', 'Start_Time', 'Duration'])
-
-# Split it by making and receiving calls
-df_CallingNumbers = df_calls.melt(id_vars=['Calling_Number'], value_vars=['Duration'], value_name='Duration')
-df_CallingNumbers.rename(columns={'Calling_Number':'Phone_Number'}, inplace=True)
-df_CallingNumbers.Duration = df_CallingNumbers.Duration.astype(int)
-
-df_ReceivingNumbers = df_calls.melt(id_vars=['Receiving_Number'], value_vars=['Duration'], value_name='Duration')
-df_ReceivingNumbers.rename(columns={'Receiving_Number':'Phone_Number'}, inplace=True)
-df_ReceivingNumbers.Duration = df_ReceivingNumbers.Duration.astype(int)
-
-# Combine the lists
-df_CombinedNumbers = pd.concat([df_CallingNumbers, df_ReceivingNumbers], axis=0, sort=False)
-df_CombinedNumbers.reset_index(inplace=True, drop=True)
-
-# Group By and find the sum of all durations
-df_GroupedNumbers = df_CombinedNumbers.groupby(['Phone_Number']).Duration.sum().reset_index()
-
+call_records = {}
+for call in calls:
+  if call[0] in call_records:
+    call_records[call[0]] += int(call[3])
+  else:
+    call_records[call[0]] = int(call[3])
+  
+  if call[1] in call_records:
+    call_records[call[1]] += int(call[3])
+  else:
+    call_records[call[1]] = int(call[3])
+    
 # Sort and get the first one
-df_GroupedNumbers.sort_values(by = ['Duration'], ascending=[False], inplace=True)
-df_GroupedNumbers.reset_index(inplace=True, drop=True)
+sorted_cr = [(k, call_records[k]) for k in sorted(call_records, key=call_records.get, reverse=True)]
 
 #Print
-print('{}  spent the longest time, {} seconds, on the phone during September 2016.'.format(df_GroupedNumbers.Phone_Number[0], df_GroupedNumbers.Duration[0]))
+print('{}  spent the longest time, {} seconds, on the phone during September 2016.'.format(sorted_cr[0][0], sorted_cr[0][1]))
