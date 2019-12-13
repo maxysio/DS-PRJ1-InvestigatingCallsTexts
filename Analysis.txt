@@ -52,28 +52,44 @@ print('{}  spent the longest time, {} seconds, on the phone during September 201
 Task 3: Bangalore calls
 ---------------------------------------------------------------------------------------------------------------------------------------
 
-- Import statements is 2 lines of code
-  = O(2)
-- Reading both the Calls and Texts files 
-  - Each block of code is 3 lines with one input for Calls and Texts file paths
-  - The number of inputs will not change
-  - Therefore 6 lines of code
-  - Depedning on the number of lines in these files, there could be higher complexity in the amount of time the file reader takes to read the file. The worst case scenario in this case would be O(2n) depending on the number of lines in the two files
-  = O(2n+6)
+# PART A
 
-- Function getAreaCode
-  - Assignment and return statements are 3 lines
-  - Taking the longest if loop for the worst case scenario 6 lines
-  - This function is being called for all calls originating from Bangalore, which would be m
-  = O(6m)
- 
- - The for loop
-  - 1 + l times where l is the number of unique area codes
-  = O(l+1)
- 
- - Assignment and print statements
-  = O(6)
- 
+# Function to get Area Code
+def getAreaCode(ph_no): # O(7) for the whole function in the worst case scenario
+  areaCode = ''
+  ph_no = str(ph_no)
+  if(ph_no.startswith('140')):
+    areaCode = '140'
+  elif(ph_no.startswith('(')):
+    idx_ending_parenthesis = ph_no.find(')')
+    if(idx_ending_parenthesis>=0):
+      areaCode = ph_no[1:idx_ending_parenthesis]
+  elif(ph_no.find(' ')>=0):
+    areaCode = ph_no[0:4]
+
+  return areaCode
+
+#Get the list of calls originating from Bangalore
+calls_from_blore = [(x, y, z, v) for x, y, z, v in calls if(str(x).startswith('(080)'))] # O(n)
+
+# Get the area codes for the receiving numbers and create a unique set
+area_codes = set()
+for call in calls_from_blore: # O(m)
+  area_codes.add(getAreaCode(call[1]))
+
+# Print the area codes of the receving numbers
+print('The numbers called by people in Bangalore have codes:')
+for ac in sorted(area_codes):
+  print(ac)
+
+# Part B
+# Get the list of calls made from bangalore to bangalore
+calls_from_blore_to_blore = [(x, y, z, v) for x, y, z, v in calls_from_blore if(str(y).startswith('(080)'))]
+
+# Get the percentage of calls made from bangalore to bangalore
+pct_blore_to_blore = round((len(calls_from_blore_to_blore)/len(calls_from_blore))*100, 2)
+print('{} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.'.format(pct_blore_to_blore))
+
  Worst Case scenario here would be O(2+2n+6+6m+l+1+6)=O(2n+6m+l+15) = O(2n+6m+l) approximately
  ---------------------------------------------------------------------------------------------------------------------------------------
  
