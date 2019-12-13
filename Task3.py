@@ -43,8 +43,6 @@ Print the answer as a part of a message::
 to other fixed lines in Bangalore."
 The percentage should have 2 decimal digits
 """
-import pandas as pd
-
 # PART A
 
 # Function to get Area Code
@@ -62,21 +60,23 @@ def getAreaCode(ph_no):
 
   return areaCode
 
-#Import the list to a dataframe
-df_calls = pd.DataFrame(calls, columns=['Calling_Number', 'Receiving_Number', 'Start_Time', 'Duration'])
+#Get the list of calls originating from Bangalore
+calls_from_blore = [(x, y, z, v) for x, y, z, v in calls if(str(x).startswith('(080)'))]
 
-# Filter on Originating calls from Bangalore
-df_calls_from_blore = df_calls[df_calls.Calling_Number.str.startswith('(080)')].reset_index(drop=True)
+# Get the area codes for the receiving numbers and create a unique set
+area_codes = set()
+for call in calls_from_blore:
+  area_codes.add(getAreaCode(call[1]))
 
-# Apply a lamda function to get Area codes into a separate column
-df_calls_from_blore['AreaCode'] = df_calls_from_blore.apply(lambda x: getAreaCode(x['Receiving_Number']), axis=1)
-
-# Print the Area Codes
+# Print the area codes of the receving numbers
 print('The numbers called by people in Bangalore have codes:')
-for ac in np.sort(df_calls_from_blore.AreaCode.unique()):
+for ac in sorted(area_codes):
   print(ac)
-  
-# PART B
-pct_blore_to_blore = round((df_calls_from_blore[df_calls_from_blore.AreaCode=='080'].shape[0]/df_calls_from_blore.shape[0])*100, 2)
+
+# Part B
+# Get the list of calls made from bangalore to bangalore
+calls_from_blore_to_blore = [(x, y, z, v) for x, y, z, v in calls_from_blore if(str(y).startswith('(080)'))]
+
+# Get the percentage of calls made from bangalore to bangalore
+pct_blore_to_blore = round((len(calls_from_blore_to_blore)/len(calls_from_blore))*100, 2)
 print('{} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.'.format(pct_blore_to_blore))
-  
