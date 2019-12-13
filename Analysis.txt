@@ -1,17 +1,12 @@
 Task 0: Read files Calls and Texts. Print the first line of Texts and the last line of Calls dataset
 ----------------------------------------------------------------------------------------------------------------------------------------
-- Import statement is 1 line of code
-  = O(1)
-- Reading both the Calls and Texts files 
-  - Each block of code is 3 lines with one input for Calls and Texts file paths
-  - The number of inputs will not change
-  - Therefore 6 lines of code
-  - Depedning on the number of lines in these files, there could be higher complexity in the amount of time the file reader takes to read the file. The worst case scenario in this case would be O(2n) depending on the number of lines in the two files
-  = O(n+n+6) = O(2n+6)
-- Assignment of variables and printing the output is 4 lines, there is no change again in the number of inputs
- = O(4)
+texts_texting_number, texts_receiving_number, text_time = texts[0][0], texts[0][1], texts[0][2] # O(1)
+print("First record of texts, {} texts {} at time {}".format(texts_texting_number, texts_receiving_number, text_time)) # O(1)
+
+calls_calling_number, calls_receiving_number, call_time, call_duration = calls[-1][0], calls[-1][1], calls[-1][2], calls[-1][3] # O(1)
+print("Last record of calls, {} calls {} at time {}, lasting {} seconds".format(calls_calling_number, calls_receiving_number, call_time, call_duration)) # O(1)
  
- Worst Case scenario here would be O(1 + 2n + 6 + 4) = O(2n + 11) = O(2n) approximately
+ Worst Case scenario here would be O(1)
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 Task 1: How many different telephone numbers are there in the records?
