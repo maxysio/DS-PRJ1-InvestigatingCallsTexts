@@ -26,6 +26,7 @@ The list of numbers should be print out one per line in lexicographic order with
 """
 
 import pandas as pd
+import numpy as np
 
 # Read the call data into a dataframe
 df_calls = pd.DataFrame(calls, columns=['Calling_Number', 'Receiving_Number', 'Start_Time', 'Duration'])
