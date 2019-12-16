@@ -6,24 +6,23 @@ print("First record of texts, {} texts {} at time {}".format(texts_texting_numbe
 calls_calling_number, calls_receiving_number, call_time, call_duration = calls[-1][0], calls[-1][1], calls[-1][2], calls[-1][3] # O(1)
 print("Last record of calls, {} calls {} at time {}, lasting {} seconds".format(calls_calling_number, calls_receiving_number, call_time, call_duration)) # O(1)
  
- Worst Case scenario here would be O(1)
+ Worst Case scenario here would be constant - O(1)
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 Task 1: How many different telephone numbers are there in the records?
 ---------------------------------------------------------------------------------------------------------------------------------------
 unique_numbers = set() # O(1)
-for call, text in zip(calls, texts): # O(n+m)
-  # Add the calling and the receiving call phone numbers
-  unique_numbers.add(call[0]) # O(1)
-  unique_numbers.add(call[1]) # O(1)
+concat_list = [] # O(1)
+concat_list.extend(calls) # O(n)
+concat_list.extend(texts) # O(m)
+for item in concat_list: # O(n+m)
+  # Add the origin and the receiving phone numbers
+  unique_numbers.add(item[0])
+  unique_numbers.add(item[1])
   
-  # Add the sending and the receiving call text phone numbers
-  unique_numbers.add(text[0]) # O(1)
-  unique_numbers.add(text[1]) # O(1)
-
 print('There are {} different telephone numbers in the records'.format(len(unique_numbers))) # O(1)
  
- Worst Case scenario here would be O(n+m)
+ Worst Case scenario here would be O(n+m) = O(n)
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 Task 2: Which telephone number spent the longest time on the phone during the period?
@@ -46,7 +45,7 @@ sorted_cr = [(k, call_records[k]) for k in sorted(call_records, key=call_records
 #Print
 print('{}  spent the longest time, {} seconds, on the phone during September 2016.'.format(sorted_cr[0][0], sorted_cr[0][1])) # O(1)
  
- Worst Case scenario here would be O(n+m)
+ Worst Case scenario here would be O(n+m) = O(n)
  ---------------------------------------------------------------------------------------------------------------------------------------
 
 Task 3: Bangalore calls
@@ -78,45 +77,40 @@ for call in calls_from_blore: # O(m)
   area_codes.add(getAreaCode(call[1]))
 
 # Print the area codes of the receving numbers
-print('The numbers called by people in Bangalore have codes:')
+print('The numbers called by people in Bangalore have codes:') # O(k)
 for ac in sorted(area_codes):
   print(ac)
 
 # Part B
 # Get the list of calls made from bangalore to bangalore
-calls_from_blore_to_blore = [(x, y, z, v) for x, y, z, v in calls_from_blore if(str(y).startswith('(080)'))]
+calls_from_blore_to_blore = [(x, y, z, v) for x, y, z, v in calls_from_blore if(str(y).startswith('(080)'))] # O(p)
 
 # Get the percentage of calls made from bangalore to bangalore
-pct_blore_to_blore = round((len(calls_from_blore_to_blore)/len(calls_from_blore))*100, 2)
-print('{} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.'.format(pct_blore_to_blore))
+pct_blore_to_blore = round((len(calls_from_blore_to_blore)/len(calls_from_blore))*100, 2) # O(1)
+print('{} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.'.format(pct_blore_to_blore)) # (1)
 
- Worst Case scenario here would be O(2+2n+6+6m+l+1+6)=O(2n+6m+l+15) = O(2n+6m+l) approximately
+ Worst Case scenario here would be O(n+m+k+p) = O(n)
  ---------------------------------------------------------------------------------------------------------------------------------------
  
  Task 4: The telephone company want to identify numbers that might be doing telephone marketing.
  
- - Import statements is 2 lines of code
-  = O(2)
-- Reading both the Calls and Texts files 
-  - Each block of code is 3 lines with one input for Calls and Texts file paths
-  - The number of inputs will not change
-  - Therefore 6 lines of code
-  - Depedning on the number of lines in these files, there could be higher complexity in the amount of time the file reader takes to read the file. The worst case scenario in this case would be O(2n) depending on the number of lines in the two files
-  = O(2n+6)
-  
- - The isin statements
-  - Check for numbers that make calls but never receives calls - m (number of ph nos that make calls) * l (number of ph nos that receive calls)
-  - Check for numbers that only makes calls but does not send texts - k * j
-  - Check for numbers that does not make calls or send texts or receive texts - h * i
-  = O(m*l + k*j + h*i)
+ # Read the call data into a dataframe
+df_calls = pd.DataFrame(calls, columns=['Calling_Number', 'Receiving_Number', 'Start_Time', 'Duration']) # O(n)
+
+# Read the text data into a dataframe
+df_texts = pd.DataFrame(texts, columns=['Sending_Number', 'Receiving_Number', 'Timestamp']) # O(m)
+
+# Find phone numbers which make calls but never receive calls
+df_tm = df_calls[~df_calls.Calling_Number.isin(df_calls.Receiving_Number)] # O(1)
+
+# Cross check the above list with the phone numbers which never sends or receives texts
+df_tm = df_tm[~df_tm.Calling_Number.isin(df_texts.Sending_Number)] # O(1)
+df_tm = df_tm[~df_tm.Calling_Number.isin(df_texts.Receiving_Number)] # O(1)
+
+# Print the list of possible telemarketers
+print('These numbers could be telemarketers: ')
+for tm in np.sort(df_tm.Calling_Number.unique()): # O(p)
+  print(tm)
  
- - There are 6 assignment statements
-  = O(6)
-  
- - The for loop will run h number of times where g is the number of unique numbers
- = O(g+1)
- 
-Worst Case scenario here would be O(2+2n+6+m*l + k*j + h*i+6+g+1) = O(2n+m*l+k*j+h*i+g+15) = O(2n+m*l+k*j+h*i+g)
+Worst Case scenario here would be O(n+m+p) = O(n)
 ---------------------------------------------------------------------------------------------------------------------------------------
- 
- ---------------------------------------------------------------------------------------------------------------------------------------
