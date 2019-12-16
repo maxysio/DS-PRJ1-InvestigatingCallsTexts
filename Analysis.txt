@@ -77,8 +77,8 @@ for call in calls_from_blore: # O(m)
   area_codes.add(getAreaCode(call[1]))
 
 # Print the area codes of the receving numbers
-print('The numbers called by people in Bangalore have codes:') # O(k)
-for ac in sorted(area_codes):
+print('The numbers called by people in Bangalore have codes:') 
+for ac in sorted(area_codes): # O(klogk)
   print(ac)
 
 # Part B
@@ -89,7 +89,7 @@ calls_from_blore_to_blore = [(x, y, z, v) for x, y, z, v in calls_from_blore if(
 pct_blore_to_blore = round((len(calls_from_blore_to_blore)/len(calls_from_blore))*100, 2) # O(1)
 print('{} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.'.format(pct_blore_to_blore)) # (1)
 
- Worst Case scenario here would be O(n+m+k+p) = O(n)
+ Worst Case scenario here would be O(n+m+klogk+p) = O(nlogn)
  ---------------------------------------------------------------------------------------------------------------------------------------
  
  Task 4: The telephone company want to identify numbers that might be doing telephone marketing.
@@ -109,8 +109,8 @@ df_tm = df_tm[~df_tm.Calling_Number.isin(df_texts.Receiving_Number)] # O(1)
 
 # Print the list of possible telemarketers
 print('These numbers could be telemarketers: ')
-for tm in np.sort(df_tm.Calling_Number.unique()): # O(p)
+for tm in np.sort(df_tm.Calling_Number.unique()): # O(plogp)
   print(tm)
  
-Worst Case scenario here would be O(n+m+p) = O(n)
+Worst Case scenario here would be O(n+m+plogp) = O(nlogn)
 ---------------------------------------------------------------------------------------------------------------------------------------
