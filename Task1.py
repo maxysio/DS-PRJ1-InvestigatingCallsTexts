@@ -19,13 +19,12 @@ Print a message:
 "There are <count> different telephone numbers in the records."
 """
 unique_numbers = set()
-for call, text in zip(calls, texts):
-  # Add the calling and the receiving call phone numbers
-  unique_numbers.add(call[0])
-  unique_numbers.add(call[1])
+concat_list = []
+concat_list.extend(calls)
+concat_list.extend(texts)
+for item in concat_list:
+  # Add the origin and the receiving phone numbers
+  unique_numbers.add(item[0])
+  unique_numbers.add(item[1])
   
-  # Add the sending and the receiving call text phone numbers
-  unique_numbers.add(text[0])
-  unique_numbers.add(text[1])
-
 print('There are {} different telephone numbers in the records'.format(len(unique_numbers)))
